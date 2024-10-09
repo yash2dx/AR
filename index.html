@@ -7,28 +7,24 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
     
-    <!-- Move gesture-handler script before the scene -->
+    <!-- Gesture Handler Script -->
     <script>
         AFRAME.registerComponent('gesture-handler', {
             init: function () {
-                var el = this.el; // Reference to the current entity
+                var el = this.el;
 
-                // On click, change the rotation speed or some behavior
-                el.addEventListener('click', function (evt) {
+                el.addEventListener('click', function () {
                     var currentSpeed = el.getAttribute('animation').dur;
-                    var newSpeed = currentSpeed === "10000" ? "2000" : "10000"; // Toggle speed
+                    var newSpeed = currentSpeed === "10000" ? "2000" : "10000";
                     el.setAttribute('animation', 'dur', newSpeed);
-                    console.log('Planet clicked! Rotation speed changed.');
                 });
 
-                // On mouse enter (or touch enter), change color
                 el.addEventListener('mouseenter', function () {
-                    el.setAttribute('color', '#FF0000'); // Change color on hover
+                    el.setAttribute('color', '#FF0000');
                 });
 
-                // On mouse leave, revert color
                 el.addEventListener('mouseleave', function () {
-                    el.setAttribute('color', el.id === "earth" ? '#4CC3D9' : '#FF5733'); // Revert color based on planet
+                    el.setAttribute('color', el.id === "earth" ? '#4CC3D9' : '#FF5733');
                 });
             }
         });
@@ -36,8 +32,8 @@
 </head>
 <body style="margin: 0; overflow: hidden;">
     <a-scene embedded arjs>
-        <!-- AR Marker -->
-        <a-marker preset="hiro">
+        <!-- Custom Pattern Marker -->
+        <a-marker type="pattern" url="pattern-Office-reg.patt">
             <!-- Earth Planet -->
             <a-sphere id="earth" position="0 0.5 0" radius="0.5" color="#4CC3D9" 
                       rotation="0 90 0" 
