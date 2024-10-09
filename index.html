@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive AR Planets</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/AR-js-org/AR.js/aframe/1.1.0/aframe-ar-nft.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+    <a-scene embedded arjs>
+        <!-- Preload assets -->
+        <a-assets>
+            <img id="earthTexture" src="path/to/earth_texture.jpg">
+            <img id="marsTexture" src="path/to/mars_texture.jpg">
+        </a-assets>
+
+        <!-- AR Marker -->
+        <a-marker preset="hiro">
+            <!-- Earth Planet -->
+            <a-sphere id="earth" position="0 0.5 0" radius="0.5" src="#earthTexture"
+                      rotation="0 90 0"
+                      animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+                      event-set__mouseenter="_event: mouseenter; color: #FF0000"
+                      event-set__mouseleave="_event: mouseleave; color: #4CC3D9"
+                      gesture-handler>
+            </a-sphere>
+            
+            <!-- Mars Planet -->
+            <a-sphere id="mars" position="1 0.5 0" radius="0.4" src="#marsTexture"
+                      rotation="0 90 0"
+                      animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+                      event-set__mouseenter="_event: mouseenter; color: #FF0000"
+                      event-set__mouseleave="_event: mouseleave; color: #FF5733"
+                      gesture-handler>
+            </a-sphere>
+        </a-marker>
+
+        <!-- Camera -->
+        <a-entity camera></a-entity>
+    </a-scene>
+
+    <!-- Add Gesture Handler Script -->
+    <script>
+        AFRAME.registerComponent('gesture-handler', {
+            init: function () {
+                var el = this.el; // Reference to the current entity
+
+                // On click, change the rotation speed or some behavior
+                el.addEventListener('click', function (evt) {
+                    var currentSpeed = el.getAttribute('animation').dur;
+                    var newSpeed = currentSpeed === "10000" ? "2000" : "10000"; // Toggle speed
+                    el.setAttribute('animation', 'dur', newSpeed);
+                    console.log('Planet clicked! Rotation speed changed.');
+                });
+
+                // On mouse enter (or touch enter), change color
+                el.addEventListener('mouseenter', function () {
+                    el.setAttribute('color', '#FF0000'); // Change color on hover
+                });
+
+                // On mouse leave, revert color
+                el.addEventListener('mouseleave', function () {
+                    el.setAttribute('color', '#FFFFFF'); // Revert color when the user stops interacting
+                });
+            }
+        });
+    </script>
+</body>
+</html>
