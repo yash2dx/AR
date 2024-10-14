@@ -39,25 +39,23 @@
         <!-- Custom Pattern Marker -->
         <a-marker type="pattern" url="pattern-Office-reg.patt">
             
-            <!-- Earth Planet with Texture -->
-            <a-entity id="earthOrbit" position="0 0 0" rotation="0 0 0">
-                <a-sphere id="earth" position="1 0.5 0" radius="0.5" src="earth.jpg" 
+            <!-- Earth Orbiting the Sun -->
+            <a-entity id="earthOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
+                <a-sphere id="earth" position="2 0.5 0" radius="0.5" src="earth.jpg" material="shader: flat"
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
                           gesture-handler></a-sphere>
-                <a-animation attribute="rotation" dur="10000" to="0 360 0" repeat="indefinite"></a-animation>
             </a-entity>
             
-            <!-- Mars Planet with Texture -->
-            <a-entity id="marsOrbit" position="0 0 0" rotation="0 0 0">
-                <a-sphere id="mars" position="1.5 0.5 0" radius="0.4" src="mars.jpg" 
+            <!-- Mars Orbiting the Sun -->
+            <a-entity id="marsOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000">
+                <a-sphere id="mars" position="3 0.5 0" radius="0.4" src="mars.jpg" material="shader: flat"
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 15000"
                           gesture-handler></a-sphere>
-                <a-animation attribute="rotation" dur="15000" to="0 360 0" repeat="indefinite"></a-animation>
             </a-entity>
 
             <!-- Sun (Illuminating with Texture) -->
             <a-sphere id="sun" position="0 0.5 0" radius="0.7" src="sun.jpg"
-                      material="emissive: #FFD700; emissiveIntensity: 1.5;"
+                      material="emissive: #FFD700; emissiveIntensity: 1.5; shader: flat"
                       animation="property: rotation; to: 0 360 0; loop: true; dur: 12000"
                       gesture-handler>
             </a-sphere>
