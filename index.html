@@ -41,20 +41,20 @@
             
             <!-- Earth Orbiting the Sun -->
             <a-entity id="earthOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
-                <a-sphere id="earth" position="1.2 0.5 0" radius="0.3" material="src: url(earth.jpg); sphericalEnvMap: url(earth.jpg); shader: standard;"
+                <a-sphere id="earth" position="1.2 0.5 0" radius="0.3" material="src: url(earth.jpg); shader: standard;"
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
                           gesture-handler></a-sphere>
             </a-entity>
             
             <!-- Mars Orbiting the Sun -->
             <a-entity id="marsOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000">
-                <a-sphere id="mars" position="2 0.5 0" radius="0.25" material="src: url(mars.jpg); sphericalEnvMap: url(mars.jpg); shader: standard;"
+                <a-sphere id="mars" position="2 0.5 0" radius="0.25" material="src: url(mars.jpg); shader: standard;"
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 15000"
                           gesture-handler></a-sphere>
             </a-entity>
 
             <!-- Sun (Illuminating with Texture) -->
-            <a-sphere id="sun" position="0 0.5 0" radius="0.5" material="src: url(sun.jpg); sphericalEnvMap: url(sun.jpg); emissive: #FFD700; emissiveIntensity: 1.5; shader: standard;"
+            <a-sphere id="sun" position="0 0.5 0" radius="0.5" material="src: url(sun.jpg); emissive: #FFD700; emissiveIntensity: 1.5; shader: standard;"
                       animation="property: rotation; to: 0 360 0; loop: true; dur: 12000"
                       gesture-handler>
             </a-sphere>
