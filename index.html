@@ -6,6 +6,29 @@
     <title>Interactive AR Planets</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+    
+    <!-- Gesture Handler Script -->
+    <script>
+        AFRAME.registerComponent('gesture-handler', {
+            init: function () {
+                var el = this.el;
+
+                el.addEventListener('click', function () {
+                    var currentSpeed = el.getAttribute('animation').dur;
+                    var newSpeed = currentSpeed === "10000" ? "2000" : "10000";
+                    el.setAttribute('animation', 'dur', newSpeed);
+                });
+
+                el.addEventListener('mouseenter', function () {
+                    el.setAttribute('color', '#FF0000');
+                });
+
+                el.addEventListener('mouseleave', function () {
+                    el.setAttribute('color', el.id === "earth" ? '#4CC3D9' : '#FF5733');
+                });
+            }
+        });
+    </script>
 </head>
 <body style="margin: 0; overflow: hidden;">
     <a-scene embedded arjs>
@@ -16,24 +39,24 @@
         <!-- Custom Pattern Marker -->
         <a-marker type="pattern" url="pattern-Office-reg.patt">
             
-            <!-- Earth Planet with Texture -->
+            <!-- Earth Planet -->
             <a-entity id="earthOrbit" position="0 0 0" rotation="0 0 0">
-                <a-sphere id="earth" position="1 0.5 0" radius="0.5" src="path-to-your-earth-texture.jpg" 
+                <a-sphere id="earth" position="1 0.5 0" radius="0.5" color="#4CC3D9" 
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
                           gesture-handler></a-sphere>
                 <a-animation attribute="rotation" dur="10000" to="0 360 0" repeat="indefinite"></a-animation>
             </a-entity>
             
-            <!-- Mars Planet with Texture -->
+            <!-- Mars Planet -->
             <a-entity id="marsOrbit" position="0 0 0" rotation="0 0 0">
-                <a-sphere id="mars" position="1.5 0.5 0" radius="0.4" src="path-to-your-mars-texture.jpg" 
+                <a-sphere id="mars" position="1.5 0.5 0" radius="0.4" color="#FF5733" 
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
                           gesture-handler></a-sphere>
                 <a-animation attribute="rotation" dur="15000" to="0 360 0" repeat="indefinite"></a-animation>
             </a-entity>
 
-            <!-- Sun (Illuminating with Texture) -->
-            <a-sphere id="sun" position="0 0.5 0" radius="0.7" src="path-to-your-sun-texture.jpg"
+            <!-- Sun (Illuminating) -->
+            <a-sphere id="sun" position="0 0.5 0" radius="0.7" color="#FFD700"
                       material="emissive: #FFD700; emissiveIntensity: 1.5;"
                       animation="property: rotation; to: 0 360 0; loop: true; dur: 12000"
                       gesture-handler>
