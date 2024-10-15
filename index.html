@@ -39,25 +39,25 @@
         <!-- Custom Pattern Marker -->
         <a-marker type="pattern" url="pattern-Office-reg.patt">
             
-            <!-- Earth Orbiting the Sun -->
+            <!-- Earth Orbiting the Sun with increased segments -->
             <a-entity id="earthOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
-                <a-sphere id="earth" position="1.2 0.5 0" radius="0.3" 
-                          material="src: url(fearth.jpg); repeat: 2 2; wrap-s: repeat; wrap-t: repeat; shader: flat;"
+                <a-sphere id="earth" position="1.2 0.5 0" radius="0.3" segments-width="64" segments-height="64"
+                          material="src: url(fearth.jpg); shader: standard;"
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
                           gesture-handler></a-sphere>
             </a-entity>
             
-            <!-- Mars Orbiting the Sun -->
+            <!-- Mars Orbiting the Sun with increased segments -->
             <a-entity id="marsOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000">
-                <a-sphere id="mars" position="2 0.5 0" radius="0.25" 
-                          material="src: url(fmars.jpg); repeat: 2 2; wrap-s: repeat; wrap-t: repeat; shader: flat;"
+                <a-sphere id="mars" position="2 0.5 0" radius="0.25" segments-width="64" segments-height="64"
+                          material="src: url(fmars.jpg); shader: standard;"
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 15000"
                           gesture-handler></a-sphere>
             </a-entity>
 
-            <!-- Sun with Standard Texture Mapping -->
-            <a-sphere id="sun" position="0 0.5 0" radius="0.5" 
-                      material="src: url(fsun.jpg); repeat: 2 2; wrap-s: repeat; wrap-t: repeat; shader: flat;"
+            <!-- Sun with Standard Texture Mapping and increased segments -->
+            <a-sphere id="sun" position="0 0.5 0" radius="0.5" segments-width="64" segments-height="64"
+                      material="src: url(fsun.jpg); shader: standard;"
                       animation="property: rotation; to: 0 360 0; loop: true; dur: 12000"
                       gesture-handler>
             </a-sphere>
