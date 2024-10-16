@@ -3,31 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Interactive AR Planets</title>
+    <title>Interactive AR Planets with Zoom</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
     <script src="https://unpkg.com/aframe-drag-look-controls-component/dist/aframe-drag-look-controls-component.min.js"></script>
 
-    <!-- Gesture Handler Script -->
+    <!-- Zoom Handling Script -->
     <script>
-        AFRAME.registerComponent('gesture-handler', {
+        AFRAME.registerComponent('zoom-control', {
+            schema: {
+                minZoom: { type: 'number', default: 1 },  // Minimum zoom
+                maxZoom: { type: 'number', default: 10 }  // Maximum zoom
+            },
             init: function () {
-                var el = this.el;
+                var cameraEl = this.el;
+                var zoomLevel = 5;  // Initial zoom level
 
-                // Click to toggle rotation speed
-                el.addEventListener('click', function () {
-                    var currentSpeed = el.getAttribute('animation').dur;
-                    var newSpeed = currentSpeed === "10000" ? "2000" : "10000";
-                    el.setAttribute('animation', 'dur', newSpeed);
+                // Mouse wheel event for zoom on desktop
+                window.addEventListener('wheel', function (event) {
+                    if (event.deltaY < 0) {
+                        zoomLevel = Math.max(cameraEl.getAttribute('position').z - 0.2, this.data.minZoom);
+                    } else {
+                        zoomLevel = Math.min(cameraEl.getAttribute('position').z + 0.2, this.data.maxZoom);
+                    }
+                    cameraEl.setAttribute('position', {x: 0, y: 1.6, z: zoomLevel});
                 });
 
-                // Hover effect
-                el.addEventListener('mouseenter', function () {
-                    el.setAttribute('material', 'color', '#FFFF00');
+                // Pinch to zoom for mobile devices
+                var initialDistance = null;
+                window.addEventListener('touchmove', function (event) {
+                    if (event.touches.length === 2) {
+                        var touch1 = event.touches[0];
+                        var touch2 = event.touches[1];
+                        var currentDistance = Math.sqrt(Math.pow(touch2.clientX - touch1.clientX, 2) + Math.pow(touch2.clientY - touch1.clientY, 2));
+                        
+                        if (!initialDistance) {
+                            initialDistance = currentDistance;
+                        } else {
+                            var zoomFactor = (initialDistance - currentDistance) * 0.01;
+                            zoomLevel = Math.max(Math.min(cameraEl.getAttribute('position').z + zoomFactor, this.data.maxZoom), this.data.minZoom);
+                            cameraEl.setAttribute('position', {x: 0, y: 1.6, z: zoomLevel});
+                            initialDistance = currentDistance;
+                        }
+                    }
                 });
 
-                el.addEventListener('mouseleave', function () {
-                    el.setAttribute('material', 'color', el.id === "sun" ? '#FFA500' : '');
+                // Reset distance on touch end
+                window.addEventListener('touchend', function () {
+                    initialDistance = null;
                 });
             }
         });
@@ -45,7 +68,7 @@
             <!-- Earth Orbiting the Sun with increased segments and new texture -->
             <a-entity id="earthOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
                 <a-sphere id="earth" position="1.2 0.5 0" radius="0.3" segments-width="64" segments-height="64"
-                          material="src: url(earty.jpg); sphericalEnvMap: true; shader: standard;" 
+                          material="src: url(/path/to/earty.jpg); sphericalEnvMap: true; shader: standard;" 
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
                           gesture-handler>
                 </a-sphere>
@@ -54,7 +77,7 @@
             <!-- Mars Orbiting the Sun with increased segments and new texture -->
             <a-entity id="marsOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000">
                 <a-sphere id="mars" position="2 0.5 0" radius="0.25" segments-width="64" segments-height="64"
-                          material="src: url(marsy.jpg); sphericalEnvMap: true; shader: standard;" 
+                          material="src: url(/path/to/marsy.jpg); sphericalEnvMap: true; shader: standard;" 
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 15000"
                           gesture-handler>
                 </a-sphere>
@@ -72,8 +95,8 @@
 
         </a-marker>
 
-        <!-- Camera with Drag Controls -->
-        <a-entity camera look-controls drag-look-controls></a-entity>
+        <!-- Camera with Drag Controls and Zoom Controls -->
+        <a-entity camera look-controls drag-look-controls zoom-control></a-entity>
     </a-scene>
 </body>
 </html>
