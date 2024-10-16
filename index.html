@@ -6,7 +6,7 @@
     <title>Interactive AR Planets</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
-    <script src="https://unpkg.com/aframe-drag-component/dist/aframe-drag-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-drag-look-controls-component/dist/aframe-drag-look-controls-component.min.js"></script>
 
     <!-- Gesture Handler Script -->
     <script>
@@ -42,38 +42,38 @@
         <!-- Custom Pattern Marker -->
         <a-marker type="pattern" url="pattern-Office-reg.patt">
             
-            <!-- Earth centered and draggable in all directions -->
+            <!-- Earth Orbiting the Sun with increased segments -->
             <a-entity id="earthOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
-                <a-sphere id="earth" position="0 0.5 0" radius="0.3" segments-width="64" segments-height="64"
+                <a-sphere id="earth" position="1.2 0.5 0" radius="0.3" segments-width="64" segments-height="64"
                           material="src: url(fearth.jpg); shader: standard;" 
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
-                          gesture-handler
-                          drag></a-sphere>
+                          gesture-handler>
+                </a-sphere>
             </a-entity>
             
-            <!-- Mars centered and draggable in all directions -->
+            <!-- Mars Orbiting the Sun with increased segments -->
             <a-entity id="marsOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000">
-                <a-sphere id="mars" position="1 0.5 0" radius="0.25" segments-width="64" segments-height="64"
+                <a-sphere id="mars" position="2 0.5 0" radius="0.25" segments-width="64" segments-height="64"
                           material="src: url(fmars.jpg); shader: standard;" 
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 15000"
-                          gesture-handler
-                          drag></a-sphere>
+                          gesture-handler>
+                </a-sphere>
             </a-entity>
 
-            <!-- Sun with fsun.jpg texture, reduced Luminous Effect, and draggable in all directions -->
+            <!-- Sun with fsun.jpg texture, Luminous Effect, and Increased Segments -->
             <a-sphere id="sun" position="0 0.5 0" radius="0.5" segments-width="64" segments-height="64"
-                      material="src: url(fsun.jpg); emissive: #FFD700; emissiveIntensity: 1.5; shader: standard;"
+                      material="src: url(fsun.jpg); emissive: #FFD700; emissiveIntensity: 3; shader: standard;"
                       animation="property: rotation; to: 0 360 0; loop: true; dur: 12000"
-                      gesture-handler
-                      drag></a-sphere>
+                      gesture-handler>
+            </a-sphere>
 
             <!-- Enhanced Light Source for Sun's Glow -->
-            <a-light type="point" intensity="3" position="0 0.5 0" color="#FFD700" distance="10" decay="2" castShadow="true"></a-light>
+            <a-light type="point" intensity="5" position="0 0.5 0" color="#FFD700" distance="10" decay="2" castShadow="true"></a-light>
 
         </a-marker>
 
-        <!-- Camera -->
-        <a-entity camera look-controls></a-entity>
+        <!-- Camera with Drag Controls -->
+        <a-entity camera look-controls drag-look-controls></a-entity>
     </a-scene>
 </body>
 </html>
