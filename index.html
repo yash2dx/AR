@@ -6,6 +6,7 @@
     <title>Interactive AR Planets</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+    <script src="https://unpkg.com/aframe-drag-look-controls-component/dist/aframe-drag-look-controls-component.min.js"></script>
 
     <!-- Gesture Handler Script -->
     <script>
@@ -13,18 +14,20 @@
             init: function () {
                 var el = this.el;
 
+                // Click to toggle rotation speed
                 el.addEventListener('click', function () {
                     var currentSpeed = el.getAttribute('animation').dur;
                     var newSpeed = currentSpeed === "10000" ? "2000" : "10000";
                     el.setAttribute('animation', 'dur', newSpeed);
                 });
 
+                // Hover effect
                 el.addEventListener('mouseenter', function () {
-                    el.setAttribute('color', '#FF0000');
+                    el.setAttribute('material', 'color', '#FFFF00');
                 });
 
                 el.addEventListener('mouseleave', function () {
-                    el.setAttribute('color', el.id === "earth" ? '#4CC3D9' : '#FF5733');
+                    el.setAttribute('material', 'color', el.id === "sun" ? '#FFA500' : '');
                 });
             }
         });
@@ -44,7 +47,8 @@
                 <a-sphere id="earth" position="1.2 0.5 0" radius="0.3" segments-width="64" segments-height="64"
                           material="src: url(fearth.jpg); shader: standard;" 
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
-                          gesture-handler></a-sphere>
+                          gesture-handler>
+                </a-sphere>
             </a-entity>
             
             <!-- Mars Orbiting the Sun with increased segments -->
@@ -52,10 +56,11 @@
                 <a-sphere id="mars" position="2 0.5 0" radius="0.25" segments-width="64" segments-height="64"
                           material="src: url(fmars.jpg); shader: standard;" 
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 15000"
-                          gesture-handler></a-sphere>
+                          gesture-handler>
+                </a-sphere>
             </a-entity>
 
-            <!-- Sun with fsun.jpg texture and Luminous Effect -->
+            <!-- Sun with fsun.jpg texture, Luminous Effect, and Increased Segments -->
             <a-sphere id="sun" position="0 0.5 0" radius="0.5" segments-width="64" segments-height="64"
                       material="src: url(fsun.jpg); emissive: #FFD700; emissiveIntensity: 3; shader: standard;"
                       animation="property: rotation; to: 0 360 0; loop: true; dur: 12000"
@@ -67,8 +72,8 @@
 
         </a-marker>
 
-        <!-- Camera -->
-        <a-entity camera></a-entity>
+        <!-- Camera with Drag Controls -->
+        <a-entity camera look-controls drag-look-controls></a-entity>
     </a-scene>
 </body>
 </html>
