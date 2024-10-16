@@ -32,25 +32,21 @@
             }
         });
 
-        // Zoom in/out functionality
-        AFRAME.registerComponent('zoom', {
-            schema: {
-                minZoom: {type: 'number', default: 5},
-                maxZoom: {type: 'number', default: 15}
-            },
+        // Zoom Component
+        AFRAME.registerComponent('zoom-control', {
             init: function () {
                 var camera = this.el;
-                var zoomLevel = 10;
+                var zoomLevel = 1;
 
                 window.addEventListener('wheel', function (event) {
-                    if (event.deltaY < 0) {
-                        zoomLevel -= 0.5; // Zoom in
+                    if (event.deltaY > 0) {
+                        zoomLevel += 0.1; // Zoom out
                     } else {
-                        zoomLevel += 0.5; // Zoom out
+                        zoomLevel -= 0.1; // Zoom in
                     }
 
-                    zoomLevel = Math.min(Math.max(zoomLevel, camera.components.zoom.data.minZoom), camera.components.zoom.data.maxZoom);
-                    camera.setAttribute('zoom', zoomLevel);
+                    zoomLevel = Math.min(Math.max(zoomLevel, 0.5), 3); // Set min and max zoom levels
+                    camera.setAttribute('camera', 'zoom', zoomLevel);
                 });
             }
         });
@@ -96,7 +92,7 @@
         </a-marker>
 
         <!-- Camera with Zoom and Drag Controls -->
-        <a-entity camera look-controls drag-look-controls zoom></a-entity>
+        <a-entity camera zoom-control look-controls drag-look-controls></a-entity>
     </a-scene>
 </body>
 </html>
