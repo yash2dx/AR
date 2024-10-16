@@ -11,14 +11,40 @@
     <!-- Gesture Handler Script -->
     <script>
         AFRAME.registerComponent('gesture-handler', {
+            schema: {
+                minX: {type: 'number', default: -2},
+                maxX: {type: 'number', default: 2},
+                minY: {type: 'number', default: -2},
+                maxY: {type: 'number', default: 2}
+            },
             init: function () {
                 var el = this.el;
+                var pos = el.getAttribute('position');
 
                 // Click to toggle rotation speed
                 el.addEventListener('click', function () {
                     var currentSpeed = el.getAttribute('animation').dur;
                     var newSpeed = currentSpeed === "10000" ? "2000" : "10000";
                     el.setAttribute('animation', 'dur', newSpeed);
+                });
+
+                // Drag to move in all directions
+                el.addEventListener('mousedown', function (evt) {
+                    window.addEventListener('mousemove', onMouseMove);
+                    window.addEventListener('mouseup', onMouseUp);
+                    
+                    function onMouseMove(event) {
+                        var deltaX = (event.movementX || event.mozMovementX || event.webkitMovementX || 0) * 0.01;
+                        var deltaY = -(event.movementY || event.mozMovementY || event.webkitMovementY || 0) * 0.01;
+                        pos.x = Math.min(Math.max(pos.x + deltaX, el.components['gesture-handler'].data.minX), el.components['gesture-handler'].data.maxX);
+                        pos.y = Math.min(Math.max(pos.y + deltaY, el.components['gesture-handler'].data.minY), el.components['gesture-handler'].data.maxY);
+                        el.setAttribute('position', pos);
+                    }
+
+                    function onMouseUp() {
+                        window.removeEventListener('mousemove', onMouseMove);
+                        window.removeEventListener('mouseup', onMouseUp);
+                    }
                 });
 
                 // Hover effect
