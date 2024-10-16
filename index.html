@@ -51,10 +51,10 @@
                 </a-sphere>
             </a-entity>
             
-            <!-- Mars Orbiting the Sun with increased segments -->
+            <!-- Mars Orbiting the Sun with increased segments and new texture -->
             <a-entity id="marsOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000">
                 <a-sphere id="mars" position="2 0.5 0" radius="0.25" segments-width="64" segments-height="64"
-                          material="src: url(fmars.jpg); shader: standard;" 
+                          material="src: url(marsy.jpg); sphericalEnvMap: true; shader: standard;" 
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 15000"
                           gesture-handler>
                 </a-sphere>
