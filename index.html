@@ -60,15 +60,15 @@
                           drag></a-sphere>
             </a-entity>
 
-            <!-- Sun with fsun.jpg texture, Luminous Effect, and draggable in all directions -->
+            <!-- Sun with fsun.jpg texture, reduced Luminous Effect, and draggable in all directions -->
             <a-sphere id="sun" position="0 0.5 0" radius="0.5" segments-width="64" segments-height="64"
-                      material="src: url(fsun.jpg); emissive: #FFD700; emissiveIntensity: 3; shader: standard;"
+                      material="src: url(fsun.jpg); emissive: #FFD700; emissiveIntensity: 1.5; shader: standard;"
                       animation="property: rotation; to: 0 360 0; loop: true; dur: 12000"
                       gesture-handler
                       drag></a-sphere>
 
             <!-- Enhanced Light Source for Sun's Glow -->
-            <a-light type="point" intensity="5" position="0 0.5 0" color="#FFD700" distance="10" decay="2" castShadow="true"></a-light>
+            <a-light type="point" intensity="3" position="0 0.5 0" color="#FFD700" distance="10" decay="2" castShadow="true"></a-light>
 
         </a-marker>
 
