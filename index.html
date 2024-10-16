@@ -6,45 +6,19 @@
     <title>Interactive AR Planets</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
-    <script src="https://unpkg.com/aframe-drag-look-controls-component/dist/aframe-drag-look-controls-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-drag-component/dist/aframe-drag-component.min.js"></script>
 
     <!-- Gesture Handler Script -->
     <script>
         AFRAME.registerComponent('gesture-handler', {
-            schema: {
-                minX: {type: 'number', default: -2},
-                maxX: {type: 'number', default: 2},
-                minY: {type: 'number', default: -2},
-                maxY: {type: 'number', default: 2}
-            },
             init: function () {
                 var el = this.el;
-                var pos = el.getAttribute('position');
 
                 // Click to toggle rotation speed
                 el.addEventListener('click', function () {
                     var currentSpeed = el.getAttribute('animation').dur;
                     var newSpeed = currentSpeed === "10000" ? "2000" : "10000";
                     el.setAttribute('animation', 'dur', newSpeed);
-                });
-
-                // Drag to move in all directions
-                el.addEventListener('mousedown', function (evt) {
-                    window.addEventListener('mousemove', onMouseMove);
-                    window.addEventListener('mouseup', onMouseUp);
-                    
-                    function onMouseMove(event) {
-                        var deltaX = (event.movementX || event.mozMovementX || event.webkitMovementX || 0) * 0.01;
-                        var deltaY = -(event.movementY || event.mozMovementY || event.webkitMovementY || 0) * 0.01;
-                        pos.x = Math.min(Math.max(pos.x + deltaX, el.components['gesture-handler'].data.minX), el.components['gesture-handler'].data.maxX);
-                        pos.y = Math.min(Math.max(pos.y + deltaY, el.components['gesture-handler'].data.minY), el.components['gesture-handler'].data.maxY);
-                        el.setAttribute('position', pos);
-                    }
-
-                    function onMouseUp() {
-                        window.removeEventListener('mousemove', onMouseMove);
-                        window.removeEventListener('mouseup', onMouseUp);
-                    }
                 });
 
                 // Hover effect
@@ -68,38 +42,38 @@
         <!-- Custom Pattern Marker -->
         <a-marker type="pattern" url="pattern-Office-reg.patt">
             
-            <!-- Earth Orbiting the Sun with increased segments -->
+            <!-- Earth centered and draggable in all directions -->
             <a-entity id="earthOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
-                <a-sphere id="earth" position="1.2 0.5 0" radius="0.3" segments-width="64" segments-height="64"
+                <a-sphere id="earth" position="0 0.5 0" radius="0.3" segments-width="64" segments-height="64"
                           material="src: url(fearth.jpg); shader: standard;" 
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
-                          gesture-handler>
-                </a-sphere>
+                          gesture-handler
+                          drag></a-sphere>
             </a-entity>
             
-            <!-- Mars Orbiting the Sun with increased segments -->
+            <!-- Mars centered and draggable in all directions -->
             <a-entity id="marsOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000">
-                <a-sphere id="mars" position="2 0.5 0" radius="0.25" segments-width="64" segments-height="64"
+                <a-sphere id="mars" position="1 0.5 0" radius="0.25" segments-width="64" segments-height="64"
                           material="src: url(fmars.jpg); shader: standard;" 
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 15000"
-                          gesture-handler>
-                </a-sphere>
+                          gesture-handler
+                          drag></a-sphere>
             </a-entity>
 
-            <!-- Sun with fsun.jpg texture, Luminous Effect, and Increased Segments -->
+            <!-- Sun with fsun.jpg texture, Luminous Effect, and draggable in all directions -->
             <a-sphere id="sun" position="0 0.5 0" radius="0.5" segments-width="64" segments-height="64"
                       material="src: url(fsun.jpg); emissive: #FFD700; emissiveIntensity: 3; shader: standard;"
                       animation="property: rotation; to: 0 360 0; loop: true; dur: 12000"
-                      gesture-handler>
-            </a-sphere>
+                      gesture-handler
+                      drag></a-sphere>
 
             <!-- Enhanced Light Source for Sun's Glow -->
             <a-light type="point" intensity="5" position="0 0.5 0" color="#FFD700" distance="10" decay="2" castShadow="true"></a-light>
 
         </a-marker>
 
-        <!-- Camera with Drag Controls -->
-        <a-entity camera look-controls drag-look-controls></a-entity>
+        <!-- Camera -->
+        <a-entity camera look-controls></a-entity>
     </a-scene>
 </body>
 </html>
