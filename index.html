@@ -31,25 +31,6 @@
                 });
             }
         });
-
-        // Zoom Component
-        AFRAME.registerComponent('zoom-control', {
-            init: function () {
-                var camera = this.el;
-                var zoomLevel = 1;
-
-                window.addEventListener('wheel', function (event) {
-                    if (event.deltaY > 0) {
-                        zoomLevel += 0.1; // Zoom out
-                    } else {
-                        zoomLevel -= 0.1; // Zoom in
-                    }
-
-                    zoomLevel = Math.min(Math.max(zoomLevel, 0.5), 3); // Set min and max zoom levels
-                    camera.setAttribute('camera', 'zoom', zoomLevel);
-                });
-            }
-        });
     </script>
 </head>
 <body style="margin: 0; overflow: hidden;">
@@ -64,7 +45,7 @@
             <!-- Earth Orbiting the Sun with increased segments -->
             <a-entity id="earthOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
                 <a-sphere id="earth" position="1.2 0.5 0" radius="0.3" segments-width="64" segments-height="64"
-                          material="src: #earthTexture; shader: standard;" 
+                          material="src: url(fearth.jpg); shader: standard;" 
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
                           gesture-handler>
                 </a-sphere>
@@ -73,7 +54,7 @@
             <!-- Mars Orbiting the Sun with increased segments -->
             <a-entity id="marsOrbit" position="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000">
                 <a-sphere id="mars" position="2 0.5 0" radius="0.25" segments-width="64" segments-height="64"
-                          material="src: #marsTexture; shader: standard;" 
+                          material="src: url(fmars.jpg); shader: standard;" 
                           animation="property: rotation; to: 0 360 0; loop: true; dur: 15000"
                           gesture-handler>
                 </a-sphere>
@@ -81,7 +62,7 @@
 
             <!-- Sun with fsun.jpg texture, Luminous Effect, and Increased Segments -->
             <a-sphere id="sun" position="0 0.5 0" radius="0.5" segments-width="64" segments-height="64"
-                      material="src: #sunTexture; emissive: #FFD700; emissiveIntensity: 3; shader: standard;"
+                      material="src: url(fsun.jpg); emissive: #FFD700; emissiveIntensity: 3; shader: standard;"
                       animation="property: rotation; to: 0 360 0; loop: true; dur: 12000"
                       gesture-handler>
             </a-sphere>
@@ -91,15 +72,8 @@
 
         </a-marker>
 
-        <!-- Camera with Zoom and Drag Controls -->
-        <a-entity camera zoom-control look-controls drag-look-controls></a-entity>
-
-        <!-- Assets for textures -->
-        <a-assets>
-            <img id="earthTexture" src="fearth.jpg" />
-            <img id="marsTexture" src="fmars.jpg" />
-            <img id="sunTexture" src="fsun.jpg" />
-        </a-assets>
+        <!-- Camera with Drag Controls -->
+        <a-entity camera look-controls drag-look-controls></a-entity>
     </a-scene>
 </body>
 </html>
