@@ -31,6 +31,29 @@
                 });
             }
         });
+
+        // Zoom in/out functionality
+        AFRAME.registerComponent('zoom', {
+            schema: {
+                minZoom: {type: 'number', default: 5},
+                maxZoom: {type: 'number', default: 15}
+            },
+            init: function () {
+                var camera = this.el;
+                var zoomLevel = 10;
+
+                window.addEventListener('wheel', function (event) {
+                    if (event.deltaY < 0) {
+                        zoomLevel -= 0.5; // Zoom in
+                    } else {
+                        zoomLevel += 0.5; // Zoom out
+                    }
+
+                    zoomLevel = Math.min(Math.max(zoomLevel, camera.components.zoom.data.minZoom), camera.components.zoom.data.maxZoom);
+                    camera.setAttribute('zoom', zoomLevel);
+                });
+            }
+        });
     </script>
 </head>
 <body style="margin: 0; overflow: hidden;">
@@ -72,8 +95,8 @@
 
         </a-marker>
 
-        <!-- Camera with Drag Controls -->
-        <a-entity camera look-controls drag-look-controls></a-entity>
+        <!-- Camera with Zoom and Drag Controls -->
+        <a-entity camera look-controls drag-look-controls zoom></a-entity>
     </a-scene>
 </body>
 </html>
